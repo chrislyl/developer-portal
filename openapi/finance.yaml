@@ -1,0 +1,5946 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Finance Service RESTful APIs
+  contact:
+    name: QIMA IT Finance Team
+    url: 'https://qima.com/'
+    email: yulong.li@qima.com
+host: prodservices.asiainspection.pro
+basePath: /finance-services-api
+tags:
+  - name: Advance Payment
+    description: Advance Payment Controller
+  - name: CNDN
+  - name: Credit-Debit-Note
+  - name: Customer
+  - name: Dict
+    description: Dict Controller
+  - name: Employee
+  - name: Hello
+  - name: Invoice
+  - name: LT-Invoice
+  - name: NetSuite
+  - name: NetSuite-Sync-Status
+  - name: Offline-Payment
+  - name: Online-Payment
+  - name: Order
+  - name: Order-Lotus
+  - name: SAP Staff
+    description: Staff Rest Controller
+  - name: SapEmployee
+    description: Sap Employee Rest Controller
+  - name: Service-Cut-Restore
+  - name: lt-online-payment
+    description: LT Online Payment Rest Controller
+paths:
+  /advance-payment/batch-sync-to-netsuite:
+    post:
+      tags:
+        - Advance Payment
+      summary: Synchronize advance payment to NetSuite by request parameter ids
+      operationId: batchSyncToNetSuiteUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: ids
+          description: json format for database primary keys
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/advance-payment/detail/{id}':
+    get:
+      tags:
+        - Advance Payment
+      summary: detail
+      operationId: detailUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/AdvancePaymentVo'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/advance-payment/mark-order-unpaid/{userId}/{userName}':
+    post:
+      tags:
+        - Advance Payment
+      summary: Mark Order Unpaid
+      operationId: markOrderUnpaidUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: userId
+          in: path
+          description: user id
+          required: true
+          type: string
+        - name: userName
+          in: path
+          description: user name
+          required: true
+          type: string
+        - in: body
+          name: vo
+          description: Json format for OrderMarkUnpaidVo
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/advance-payment/mark-pay-orders/{userId}/{userName}':
+    post:
+      tags:
+        - Advance Payment
+      summary: markPayOrders
+      operationId: markPayOrdersUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: userId
+          in: path
+          description: userId
+          required: true
+          type: string
+        - name: userName
+          in: path
+          description: userName
+          required: true
+          type: string
+        - in: body
+          name: vos
+          description: vos
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AdvancePaymentVo'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /advance-payment/paging-query:
+    post:
+      tags:
+        - Advance Payment
+      summary: Paging query data by the request parameter pageDomain
+      operationId: pagingQueryUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: pageDomain
+          description: Json format for pageDomain
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PageModel«AdvancePaymentVo»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /cndn/get-all:
+    get:
+      tags:
+        - CNDN
+      summary: Get All Data
+      operationId: getAllUsingGET_1
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«List«CreditDebit»»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /cndn/get-by-page:
+    post:
+      tags:
+        - CNDN
+      summary: Get data by the request parameter pageDomain
+      operationId: getByPageUsingPOST_1
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: pageDomain
+          description: Json format for pageDomain
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«BootstrapTableData»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/cndn/get/{id}':
+    get:
+      tags:
+        - CNDN
+      summary: Get Data By Primary Key
+      operationId: getByIdUsingGET_1
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: database primary key
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«CreditDebit»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /cndn/sync/multiple:
+    post:
+      tags:
+        - CNDN
+      summary: syncMultipleToLotus
+      operationId: syncMultipleToLotusUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: ids
+          description: ids
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/cndn/sync/{id}':
+    get:
+      tags:
+        - CNDN
+      summary: syncToLotusById
+      operationId: syncToLotusByIdUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /credit-debit-note/batch-sync-to-netsuite:
+    post:
+      tags:
+        - Credit-Debit-Note
+      summary: Synchronize valid CN/DN to NetSuite by request parameter ids
+      operationId: batchSyncToNetSuiteUsingPOST_1
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: ids
+          description: json format for database primary keys
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /credit-debit-note/get-all:
+    get:
+      tags:
+        - Credit-Debit-Note
+      summary: Get All Data
+      operationId: getAllUsingGET
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«List«CreditDebitNote»»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /credit-debit-note/get-by-page:
+    post:
+      tags:
+        - Credit-Debit-Note
+      summary: Get data by the request parameter pageDomain
+      operationId: getByPageUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: pageDomain
+          description: Json format for pageDomain
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«BootstrapTableData»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/credit-debit-note/get/{id}':
+    get:
+      tags:
+        - Credit-Debit-Note
+      summary: Get Data By Primary Key
+      operationId: getByIdUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: database primary key
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«CreditDebitNote»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /credit-debit-note/lotus/sync-to-netsuite:
+    get:
+      tags:
+        - Credit-Debit-Note
+      summary: Triggered by ETL job to sync the Lotus CN/DN to NetSuite
+      operationId: syncLotusCnDnToNetSuiteUsingGET
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«int»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /credit-debit-note/paging-query:
+    post:
+      tags:
+        - Credit-Debit-Note
+      summary: Paging query data by the request parameter pageDomain
+      operationId: pagingQueryUsingPOST_1
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: pageDomain
+          description: Json format for pageDomain
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PageModel«CreditDebitNoteVO»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/credit-debit-note/{id}/sync-to-netsuite':
+    get:
+      tags:
+        - Credit-Debit-Note
+      summary: Synchronize valid CN/DN to NetSuite by request parameter id
+      operationId: syncToNetSuiteByIdUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: database primary key
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/credit-debit-note/{id}/view':
+    get:
+      tags:
+        - Credit-Debit-Note
+      summary: Get Data View By Primary Key
+      operationId: getCnDnViewByIdUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: database primary key
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/CreditDebitNoteVO'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /customer/batch-sync-to-netsuite:
+    post:
+      tags:
+        - Customer
+      summary: Synchronize customer to NetSuite by request parameter customer ids
+      operationId: batchSyncToNetSuiteUsingPOST_2
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: ids
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /customer/get-all:
+    get:
+      tags:
+        - Customer
+      summary: Get All Data
+      operationId: getAllUsingGET_2
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«List«Customer»»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /customer/get-by-page:
+    post:
+      tags:
+        - Customer
+      summary: Get data by the request parameter pageDomain
+      operationId: getByPageUsingPOST_2
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: pageDomain
+          description: Json format for pageDomain
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«BootstrapTableData»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/customer/get/{id}':
+    get:
+      tags:
+        - Customer
+      summary: Get Data By Primary Key
+      operationId: getByIdUsingGET_2
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: database primary key
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«Customer»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /customer/sync-batch-to-netsuite:
+    post:
+      tags:
+        - Customer
+      summary: Sync a batch of customers to NetSuite by request parameter customer ids
+      operationId: syncBatchToNetSuiteUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: dto
+          description: Json format for CustomerSyncDto
+          required: true
+          schema:
+            type: string
+        - in: body
+          name: list
+          description: list
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CustomerSyncDto'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /customer/sync-to-netsuite:
+    post:
+      tags:
+        - Customer
+      summary: Synchronize customer to NetSuite by request customer dto
+      operationId: syncToNetSuiteUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: dto
+          description: Json format for CustomerSyncDto
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/customer/sync-to-netsuite/status/{code}':
+    get:
+      tags:
+        - Customer
+      summary: Synchronize customers to NetSuite by request parameter status code
+      operationId: syncToNetSuiteByDataStatusUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: code
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/customer/{id}/sync-to-netsuite/':
+    get:
+      tags:
+        - Customer
+      summary: Synchronize customer to NetSuite by request parameter id
+      operationId: syncToNetSuiteByIdUsingGET_1
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/dict/get-by-type-and-key/{type}/{key}':
+    get:
+      tags:
+        - Dict
+      summary: get dict data by type and key
+      operationId: getByTypeAndKeyUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: key
+          in: path
+          required: true
+          type: string
+        - name: type
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/dict/get-by-type-and-value/{type}/{value}':
+    get:
+      tags:
+        - Dict
+      summary: get dict data by type and value
+      operationId: getByTypeAndValueUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: type
+          in: path
+          required: true
+          type: string
+        - name: value
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/dict/get-by-type/{type}':
+    get:
+      tags:
+        - Dict
+      summary: get dict data by type
+      operationId: getByTypeUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: type
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/dict/get-key-by-type-and-value/{type}/{value}':
+    get:
+      tags:
+        - Dict
+      summary: get dict key by type and value
+      operationId: getKeyByTypeAndValueUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: type
+          in: path
+          required: true
+          type: string
+        - name: value
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/dict/get-value-by-type-and-key/{type}/{key}':
+    get:
+      tags:
+        - Dict
+      summary: get dict data by type and key
+      operationId: getValueByTypeAndKeyUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: key
+          in: path
+          required: true
+          type: string
+        - name: type
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/dict/getDictByCity/{page}/{size}/{cityName}':
+    get:
+      tags:
+        - Dict
+      summary: paging query by city name
+      operationId: getDictCityUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: cityName
+          in: path
+          required: true
+          type: string
+        - name: page
+          in: path
+          required: true
+          type: string
+        - name: size
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PageModel«Map«string,string»»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/dict/getDictByStreet/{page}/{size}/{streetName}':
+    get:
+      tags:
+        - Dict
+      summary: paging query by street name
+      operationId: getDictStreetUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: page
+          in: path
+          required: true
+          type: string
+        - name: size
+          in: path
+          required: true
+          type: string
+        - name: streetName
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PageModel«Map«string,string»»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /employee/batch-sync-to-netsuite:
+    post:
+      tags:
+        - Employee
+      summary: Synchronize employee to NetSuite by request parameter ids
+      operationId: batchSyncToNetSuiteUsingPOST_3
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: ids
+          description: Json format for database primary keys
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /employee/get-all:
+    get:
+      tags:
+        - Employee
+      summary: Get All Data
+      operationId: getAllUsingGET_3
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«List«Employee»»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /employee/get-by-page:
+    post:
+      tags:
+        - Employee
+      summary: Get data by the request parameter pageDomain
+      operationId: getByPageUsingPOST_3
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: pageDomain
+          description: Json format for pageDomain
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«BootstrapTableData»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/employee/get/{id}':
+    get:
+      tags:
+        - Employee
+      summary: Get Data By Primary Key
+      operationId: getByIdUsingGET_3
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: database primary key
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«Employee»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/employee/sync-to-netsuite/status/{code}':
+    get:
+      tags:
+        - Employee
+      summary: Synchronize employees to NetSuite by request parameter status code
+      operationId: syncToNetSuiteByDataStatusUsingGET_1
+      produces:
+        - '*/*'
+      parameters:
+        - name: code
+          in: path
+          description: data status code
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/employee/{id}/sync-to-netsuite':
+    get:
+      tags:
+        - Employee
+      summary: Synchronize employee to NetSuite by request parameter id
+      operationId: syncToNetSuiteByIdUsingGET_2
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: database primary key
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /invoice/batch-sync:
+    post:
+      tags:
+        - Invoice
+      summary: >-
+        Synchronize NetSuite monthly/bimonthly/weekly invoices to Lotus by
+        request parameter ids
+      operationId: syncInvoicesToPSIUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: ids
+          description: json format for database primary keys
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /invoice/get-all:
+    get:
+      tags:
+        - Invoice
+      summary: Get All Data
+      operationId: getAllUsingGET_4
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«List«Invoice»»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /invoice/get-by-page:
+    post:
+      tags:
+        - Invoice
+      summary: Get data by the request parameter pageDomain
+      operationId: getByPageUsingPOST_4
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: pageDomain
+          description: Json format for pageDomain
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«BootstrapTableData»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/invoice/get/{id}':
+    get:
+      tags:
+        - Invoice
+      summary: Get Data By Primary Key
+      operationId: getByIdUsingGET_4
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: database primary key
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«Invoice»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/invoice/{id}/sync':
+    get:
+      tags:
+        - Invoice
+      summary: >-
+        Synchronize NetSuite monthly/bimonthly/weekly invoice to Lotus by
+        request parameter id
+      operationId: syncInvoiceToPSIUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: database primary key
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«boolean»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/invoice/{invNm}/download-url':
+    get:
+      tags:
+        - Invoice
+      summary: Get NetSuite invoice download url by invoice number
+      operationId: getInvoiceURLUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: invNm
+          in: path
+          description: NetSuite invoice number
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«string»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /lt-invoice/batch-sync-to-netsuite:
+    post:
+      tags:
+        - LT-Invoice
+      summary: Synchronize LT Invoice to NetSuite by request parameter ids
+      operationId: syncLTinvoiceByIdsUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: ids
+          description: json format for database primary keys
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /lt-invoice/get-all:
+    get:
+      tags:
+        - LT-Invoice
+      summary: Get All Data
+      operationId: getAllUsingGET_5
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«List«LTInvoice»»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /lt-invoice/get-by-page:
+    post:
+      tags:
+        - LT-Invoice
+      summary: Get data by the request parameter pageDomain
+      operationId: getByPageUsingPOST_5
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: pageDomain
+          description: Json format for pageDomain
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«BootstrapTableData»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/lt-invoice/get/{id}':
+    get:
+      tags:
+        - LT-Invoice
+      summary: Get Data By Primary Key
+      operationId: getByIdUsingGET_5
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: database primary key
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«LTInvoice»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /lt-invoice/re-sync-lt-invoice-to-netsuite:
+    get:
+      tags:
+        - LT-Invoice
+      summary: Synchronize LT Invoice to NetSuite by request parameter ids
+      operationId: reSyncLTInvoceForFailedAndWaitingMoreThen2HStatusUsingGET
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /lt-invoice/sync-to-netsuite:
+    post:
+      tags:
+        - LT-Invoice
+      summary: Receive AIMS invoice and synchronize to NetSuite
+      operationId: synchronizeLTinvoiceUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: invoiceList
+          description: invoiceList
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/LTInvoice'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/lt-invoice/{id}/sync-to-netsuite':
+    get:
+      tags:
+        - LT-Invoice
+      summary: Synchronize LT Invoice to NetSuite by request parameter id
+      operationId: syncLTinvoiceByIdUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: database primary key
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /lt-online-payment/batch-sync-to-netsuite:
+    post:
+      tags:
+        - lt-online-payment
+      summary: Synchronize LTOnlinePayment to NetSuite by request parameter ids
+      operationId: syncLTPaymentByIdsUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: ids
+          description: json format for database primary keys
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /lt-online-payment/get-all:
+    get:
+      tags:
+        - lt-online-payment
+      summary: Get All Data
+      operationId: getAllUsingGET_6
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«List«LTOnlinePayment»»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /lt-online-payment/get-by-page:
+    post:
+      tags:
+        - lt-online-payment
+      summary: Get data by the request parameter pageDomain
+      operationId: getByPageUsingPOST_6
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: pageDomain
+          description: Json format for pageDomain
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«BootstrapTableData»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/lt-online-payment/get/{id}':
+    get:
+      tags:
+        - lt-online-payment
+      summary: Get Data By Primary Key
+      operationId: getByIdUsingGET_6
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: database primary key
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«LTOnlinePayment»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /lt-online-payment/sync-to-netsuite:
+    post:
+      tags:
+        - lt-online-payment
+      summary: Receive AIMS LTOnlinePayment and synchronize to NetSuite
+      operationId: synchronizeLTPaymentUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: ltOnlinePayment
+          description: ltOnlinePayment
+          required: true
+          schema:
+            $ref: '#/definitions/PaymentSyncDTO'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/lt-online-payment/{id}/sync-to-netsuite':
+    get:
+      tags:
+        - lt-online-payment
+      summary: Synchronize LTOnlinePayment to NetSuite by request parameter id
+      operationId: syncLTPaymentByIdUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: database primary key
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /netsuite/bioa-exchange-rate:
+    get:
+      tags:
+        - NetSuite
+      summary: getBioaExchangeRate
+      operationId: getBioaExchangeRateUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: evaluationDate
+          in: query
+          description: evaluationDate
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /netsuite/cndn/save:
+    post:
+      tags:
+        - NetSuite
+      summary: Save and Sync NetSuite Credit/Debit Memos
+      operationId: processCreditOrDebitMemosUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: cndnVO
+          description: credit or debit json data
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /netsuite/exchange-rate:
+    get:
+      tags:
+        - NetSuite
+      summary: getExchangeRate
+      operationId: getExchangeRateUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: evaluatedCurrency
+          in: query
+          description: evaluatedCurrency
+          required: false
+          type: string
+        - name: evaluationDate
+          in: query
+          description: evaluationDate
+          required: false
+          type: string
+        - name: referenceCurrency
+          in: query
+          description: referenceCurrency
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /netsuite/interface/log/save:
+    post:
+      tags:
+        - NetSuite
+      summary: Process NetSuite Interface Log Data
+      operationId: processNSLogUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: data
+          description: NetSuite data log json data
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /netsuite/invoice/save:
+    post:
+      tags:
+        - NetSuite
+      summary: Synchronize NetSuite monthly/bimonthly/weekly invoice information
+      operationId: processInvoiceUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: inv
+          description: inovice json data
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /netsuite/payment/save:
+    post:
+      tags:
+        - NetSuite
+      summary: >-
+        Save or Update NetSuite offline payment and mark as paid in PSI, AIMS
+        and LOTUS
+      operationId: processPaymentsUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: paymentsBean
+          description: NetSuite offline payment with json format
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /netsuite/service-cut/companies:
+    post:
+      tags:
+        - NetSuite
+      summary: processServiceCutCompany
+      operationId: processServiceCutCompanyUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: isScheduled
+          in: query
+          description: isScheduled
+          required: false
+          type: boolean
+          default: false
+        - in: body
+          name: scd
+          description: scd
+          required: true
+          schema:
+            $ref: '#/definitions/ServiceCutDTO'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /netsuite/service-restore/companies:
+    post:
+      tags:
+        - NetSuite
+      summary: processServiceRestoreCompany
+      operationId: processServiceRestoreCompanyUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: srd
+          description: srd
+          required: true
+          schema:
+            $ref: '#/definitions/ServiceRestoreDTO'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /ns-sync-status/get-all:
+    get:
+      tags:
+        - NetSuite-Sync-Status
+      summary: Get All Data
+      operationId: getAllUsingGET_7
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«List«NsSyncStatus»»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /ns-sync-status/get-by-page:
+    post:
+      tags:
+        - NetSuite-Sync-Status
+      summary: Get data by the request parameter pageDomain
+      operationId: getByPageUsingPOST_7
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: pageDomain
+          description: Json format for pageDomain
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«BootstrapTableData»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/ns-sync-status/get/{id}':
+    get:
+      tags:
+        - NetSuite-Sync-Status
+      summary: Get Data By Primary Key
+      operationId: getByIdUsingGET_7
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: database primary key
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«NsSyncStatus»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /online-payment/batch-sync-to-netsuite:
+    post:
+      tags:
+        - Online-Payment
+      summary: syncToNetSuiteByIds
+      operationId: syncToNetSuiteByIdsUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: ids
+          description: ids
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /online-payment/get-all:
+    get:
+      tags:
+        - Online-Payment
+      summary: Get All Data
+      operationId: getAllUsingGET_9
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«List«OnlinePayment»»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /online-payment/get-by-page:
+    post:
+      tags:
+        - Online-Payment
+      summary: Get data by the request parameter pageDomain
+      operationId: getByPageUsingPOST_9
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: pageDomain
+          description: Json format for pageDomain
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«BootstrapTableData»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/online-payment/get/{id}':
+    get:
+      tags:
+        - Online-Payment
+      summary: Get Data By Primary Key
+      operationId: getByIdUsingGET_9
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: database primary key
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«OnlinePayment»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /online-payment/sync-to-netsuite:
+    post:
+      tags:
+        - Online-Payment
+      summary: syncToNetSuite
+      operationId: syncToNetSuiteUsingPOST_1
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: dto
+          description: dto
+          required: true
+          schema:
+            $ref: '#/definitions/OnlinePaymentDTO'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/online-payment/{paymentId}/sync-to-netsuite':
+    get:
+      tags:
+        - Online-Payment
+      summary: syncToNetSuiteById
+      operationId: syncToNetSuiteByIdUsingGET_3
+      produces:
+        - '*/*'
+      parameters:
+        - name: paymentId
+          in: path
+          description: paymentId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /order/batch-sync-to-netsuite:
+    post:
+      tags:
+        - Order
+      summary: Synchronize orders to NetSuite by request parameter ids
+      operationId: batchSyncToNetSuiteUsingPOST_4
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: ids
+          description: json format for database primary keys
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /order/batch/sync-to-finance:
+    post:
+      tags:
+        - Order
+      summary: >-
+        Synchronize finished order with offline charge to finance service by
+        request parameter orderDtoList
+      operationId: syncToFinanceUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: dto
+          description: Json format for OrderSyncDto
+          required: true
+          schema:
+            type: string
+        - in: body
+          name: orderDtoList
+          description: orderDtoList
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/OrderSyncDto'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /order/batch/sync-to-netsuite:
+    post:
+      tags:
+        - Order
+      summary: >-
+        Synchronize finished order with offline charge to NetSuite by request
+        parameter orderDtoList
+      operationId: syncToNetSuiteUsingPOST_2
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: dto
+          description: Json format for OrderSyncDto
+          required: true
+          schema:
+            type: string
+        - in: body
+          name: orderDtoList
+          description: orderDtoList
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/OrderSyncDto'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /order/get-all:
+    get:
+      tags:
+        - Order
+      summary: Get All Data
+      operationId: getAllUsingGET_10
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«List«Order»»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/order/get-by-id/{id}':
+    get:
+      tags:
+        - Order
+      summary: Get Order Present VO By Primary Key
+      operationId: getOrderViewByIdUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: database primary key
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«OrderVo»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /order/get-by-page:
+    post:
+      tags:
+        - Order
+      summary: Get data by the request parameter pageDomain
+      operationId: getByPageUsingPOST_10
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: pageDomain
+          description: Json format for pageDomain
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«BootstrapTableData»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/order/get/{id}':
+    get:
+      tags:
+        - Order
+      summary: Get Data By Primary Key
+      operationId: getByIdUsingGET_10
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: database primary key
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«Order»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /order/sync-to-netsuite:
+    post:
+      tags:
+        - Order
+      summary: Synchronize finished order to NetSuite by request parameter OrderSyncDto
+      operationId: syncToNetSuiteUsingPOST_3
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: dto
+          description: Json format for OrderSyncDto
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/order/sync-to-netsuite/status/{code}':
+    get:
+      tags:
+        - Order
+      summary: Synchronize orders to NetSuite by request parameter status code
+      operationId: syncToNetSuiteByDataStatusUsingGET_2
+      produces:
+        - '*/*'
+      parameters:
+        - name: code
+          in: path
+          description: data status code
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /order/sync-updated-to-netsuite:
+    post:
+      tags:
+        - Order
+      summary: Synchronize updated orders to NetSuite
+      operationId: syncUpdatedOrdersToNetSuiteUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: dto
+          description: Json format for OrderUpdateSyncDto
+          required: true
+          schema:
+            type: string
+        - in: body
+          name: orderSyncDtoList
+          description: orderSyncDtoList
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/OrderUpdateSyncDto'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/order/{id}/sync-to-netsuite':
+    get:
+      tags:
+        - Order
+      summary: Synchronize order to NetSuite by request parameter id
+      operationId: syncToNetSuiteByIdUsingGET_4
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: database primary key
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /payment/batch-sync:
+    post:
+      tags:
+        - Offline-Payment
+      summary: 'Mark orders/invoices as NetSuite offline paid in PSI, AIMS, LOTUS'
+      operationId: batchSyncPaymentsUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: ids
+          description: ids
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /payment/get-all:
+    get:
+      tags:
+        - Offline-Payment
+      summary: Get All Data
+      operationId: getAllUsingGET_8
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«List«OfflinePayment»»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /payment/get-by-page:
+    post:
+      tags:
+        - Offline-Payment
+      summary: Get data by the request parameter pageDomain
+      operationId: getByPageUsingPOST_8
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: pageDomain
+          description: Json format for pageDomain
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«BootstrapTableData»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/payment/get/{id}':
+    get:
+      tags:
+        - Offline-Payment
+      summary: Get Data By Primary Key
+      operationId: getByIdUsingGET_8
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: database primary key
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«OfflinePayment»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/payment/{id}/sync':
+    get:
+      tags:
+        - Offline-Payment
+      summary: 'Mark order/invoice as NetSuite offline paid in PSI, AIMS, LOTUS'
+      operationId: syncPaymentByIdUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /sap-employee/get-all:
+    get:
+      tags:
+        - SapEmployee
+      summary: Get All Data
+      operationId: getAllUsingGET_11
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«List«SapEmployeeJob»»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /sap-employee/get-by-page:
+    post:
+      tags:
+        - SapEmployee
+      summary: Get data by the request parameter pageDomain
+      operationId: getByPageUsingPOST_11
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: pageDomain
+          description: Json format for pageDomain
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«BootstrapTableData»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/sap-employee/get/{id}':
+    get:
+      tags:
+        - SapEmployee
+      summary: Get Data By Primary Key
+      operationId: getByIdUsingGET_11
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: database primary key
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«SapEmployeeJob»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/sap-employee/{id}/sync-to-lotus':
+    get:
+      tags:
+        - SapEmployee
+      summary: Synchronize sap-employee to Lotus by request parameter id
+      operationId: syncToNetSuiteByIdUsingGET_5
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: database primary key
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«object»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /sap-staff/get-all:
+    get:
+      tags:
+        - SAP Staff
+      summary: Get All Data
+      operationId: getAllUsingGET_13
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«List«Order»»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /sap-staff/get-by-page:
+    post:
+      tags:
+        - SAP Staff
+      summary: Get data by the request parameter pageDomain
+      operationId: getByPageUsingPOST_13
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: pageDomain
+          description: Json format for pageDomain
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«BootstrapTableData»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/sap-staff/get/{id}':
+    get:
+      tags:
+        - SAP Staff
+      summary: Get Data By Primary Key
+      operationId: getByIdUsingGET_13
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: database primary key
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«Order»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/sap-staff/{id}/sync-to-lotus':
+    post:
+      tags:
+        - SAP Staff
+      summary: Synchronize SAP staff to Lotus by request parameter id
+      operationId: syncToLotusByIdUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: database primary key
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            additionalProperties:
+              type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /service-cut/get-all:
+    get:
+      tags:
+        - Service-Cut-Restore
+      summary: Get All Data
+      operationId: getAllUsingGET_12
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«List«ServiceCutRestore»»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /service-cut/get-by-page:
+    post:
+      tags:
+        - Service-Cut-Restore
+      summary: Get data by the request parameter pageDomain
+      operationId: getByPageUsingPOST_12
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: pageDomain
+          description: Json format for pageDomain
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«BootstrapTableData»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/service-cut/get/{id}':
+    get:
+      tags:
+        - Service-Cut-Restore
+      summary: Get Data By Primary Key
+      operationId: getByIdUsingGET_12
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: database primary key
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«ServiceCutRestore»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/service-cut/{companyId}/history':
+    get:
+      tags:
+        - Service-Cut-Restore
+      summary: searchHistoryByCompany
+      operationId: searchHistoryByCompanyUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: companyId
+          in: path
+          description: companyId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«List«ServiceCutRestoreHistory»»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/service-cut/{companyId}/info':
+    get:
+      tags:
+        - Service-Cut-Restore
+      summary: checkAndGetServiceCut
+      operationId: checkAndGetServiceCutUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: companyId
+          in: path
+          description: companyId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ServiceCutDTOForAPI'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/service-cut/{companyId}/isServiceCut':
+    get:
+      tags:
+        - Service-Cut-Restore
+      summary: isServiceCut
+      operationId: isServiceCutUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: companyId
+          in: path
+          description: companyId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«boolean»'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/service-cut/{companyId}/{action}/{who}':
+    put:
+      tags:
+        - Service-Cut-Restore
+      summary: Manually service cut or restore pending inspection and lat testing
+      operationId: doServiceCutRestoreUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: action
+          in: path
+          description: action
+          required: true
+          type: integer
+          format: int32
+        - name: companyId
+          in: path
+          description: companyId
+          required: true
+          type: string
+        - name: who
+          in: path
+          description: who
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Result«string»'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+definitions:
+  AdvancePaymentVo:
+    type: object
+    properties:
+      abnormalData:
+        type: boolean
+      bankAccountId:
+        type: string
+      bankAccountName:
+        type: string
+      bankCharge:
+        type: number
+      createBy:
+        type: string
+      createTime:
+        type: string
+        format: date-time
+      customerId:
+        type: string
+      errorDetails:
+        type: string
+      id:
+        type: string
+      needToReSync:
+        type: boolean
+      nsSyncStatus:
+        $ref: '#/definitions/NsSyncStatus'
+      orderId:
+        type: string
+      orderNo:
+        type: string
+      outstanding:
+        type: number
+      paymentAmount:
+        type: number
+      paymentDate:
+        type: string
+        format: date
+      status:
+        type: integer
+        format: int32
+      statusClass:
+        type: string
+      statusDescription:
+        type: string
+      subsidiaryId:
+        type: string
+      transactionNo:
+        type: string
+      unpaidReason:
+        type: string
+      updateBy:
+        type: string
+      updateTime:
+        type: string
+        format: date-time
+    title: AdvancePaymentVo
+  BootstrapTableData:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      rows:
+        type: array
+        items:
+          type: object
+      total:
+        type: integer
+        format: int64
+    title: BootstrapTableData
+  ChargeItemDto:
+    type: object
+    properties:
+      amount:
+        type: number
+      item:
+        type: string
+      quantity:
+        type: integer
+        format: int32
+      rate:
+        type: number
+      sequence:
+        type: integer
+        format: int32
+    title: ChargeItemDto
+  CompanyInfoDTO:
+    type: object
+    properties:
+      amount:
+        type: number
+        format: double
+      companyId:
+        type: string
+      currency:
+        type: string
+      firstInvoiceDate:
+        type: string
+        format: date-time
+    title: CompanyInfoDTO
+  CreditDebit:
+    type: object
+    properties:
+      approvalStatus:
+        type: string
+      categoryType:
+        type: string
+      companyId:
+        type: string
+      createTime:
+        type: string
+        format: date-time
+      creationDate:
+        type: string
+        format: date-time
+      currency:
+        type: string
+      customer:
+        $ref: '#/definitions/Customer'
+      debitNoteNo:
+        type: string
+      description:
+        type: string
+      errorDetail:
+        type: string
+      exactPayment:
+        type: number
+        format: double
+      id:
+        type: string
+      orderNo:
+        type: string
+      outstanding:
+        type: number
+        format: double
+      sic:
+        type: string
+      status:
+        type: integer
+        format: int32
+      total:
+        type: number
+        format: double
+      updateTime:
+        type: string
+        format: date-time
+    title: CreditDebit
+  CreditDebitNote:
+    type: object
+    properties:
+      amount:
+        type: number
+        format: double
+      category:
+        type: string
+      cndnNo:
+        type: string
+      companyId:
+        type: string
+      createBy:
+        type: string
+      createTime:
+        type: string
+        format: date-time
+      currency:
+        type: string
+      description:
+        type: string
+      description2:
+        type: string
+      description3:
+        type: string
+      description4:
+        type: string
+      id:
+        type: string
+      issueDate:
+        type: string
+        format: date-time
+      login:
+        type: string
+      orderNo:
+        type: string
+      paymentTerm:
+        type: integer
+        format: int32
+      serviceType:
+        type: string
+      status:
+        type: integer
+        format: int32
+      subsidiary:
+        type: string
+      taxAmount:
+        type: number
+        format: double
+      taxRate:
+        type: number
+        format: double
+      totalAmount:
+        type: number
+        format: double
+      updateBy:
+        type: string
+      updateTime:
+        type: string
+        format: date-time
+    title: CreditDebitNote
+  CreditDebitNoteVO:
+    type: object
+    properties:
+      abnormalData:
+        type: boolean
+      amount:
+        type: number
+        format: double
+      category:
+        type: string
+      cndnNo:
+        type: string
+      companyId:
+        type: string
+      createBy:
+        type: string
+      createTime:
+        type: string
+        format: date-time
+      currency:
+        type: string
+      description:
+        type: string
+      description2:
+        type: string
+      description3:
+        type: string
+      description4:
+        type: string
+      errorDetails:
+        type: string
+      id:
+        type: string
+      issueDate:
+        type: string
+        format: date
+      login:
+        type: string
+      needToReSync:
+        type: boolean
+      nsSyncStatus:
+        $ref: '#/definitions/NsSyncStatus'
+      orderNo:
+        type: string
+      paymentTerm:
+        type: integer
+        format: int32
+      serviceType:
+        type: string
+      serviceTypeDesc:
+        type: string
+      status:
+        type: integer
+        format: int32
+      statusClass:
+        type: string
+      statusDescription:
+        type: string
+      subsidiary:
+        type: string
+      taxAmount:
+        type: number
+        format: double
+      taxRate:
+        type: number
+        format: double
+      totalAmount:
+        type: number
+        format: double
+      updateBy:
+        type: string
+      updateTime:
+        type: string
+        format: date-time
+    title: CreditDebitNoteVO
+  CreditDebitValidator:
+    type: object
+    properties:
+      creditMemos:
+        type: array
+        items:
+          $ref: '#/definitions/CreditDebit'
+      debitMemos:
+        type: array
+        items:
+          $ref: '#/definitions/CreditDebit'
+    title: CreditDebitValidator
+  Customer:
+    type: object
+    properties:
+      accountBankDetails:
+        type: string
+      accountGivenName:
+        type: string
+      accountName:
+        type: string
+      address:
+        type: string
+      aiBank:
+        type: string
+      altEmail:
+        type: string
+      attention:
+        type: string
+      businessUnit:
+        type: string
+      city:
+        type: string
+      cityCode:
+        type: string
+      cityTaxId:
+        type: string
+      clientId:
+        type: string
+      companyName:
+        type: string
+      companyShortName:
+        type: string
+      countryRegion:
+        type: string
+      cscMails:
+        type: string
+      currency:
+        type: string
+      customerId:
+        type: string
+      dateOfInvoicing:
+        type: string
+      disTaxId:
+        type: string
+      district:
+        type: string
+      districtCode:
+        type: string
+      email:
+        type: string
+      externalCompanyId:
+        type: string
+      fax:
+        type: string
+      firstName:
+        type: string
+      gender:
+        type: string
+      giro:
+        type: string
+      houseNumber:
+        type: string
+      invCompanyName:
+        type: string
+      invoiceByLogin:
+        type: string
+      invoiceDate:
+        type: string
+      invoiceEmail:
+        type: string
+      isKeyAccount:
+        type: string
+      isServiceCut:
+        type: boolean
+      isWhiteListed:
+        type: boolean
+      jobTitle:
+        type: string
+      keyAccountSic:
+        type: string
+      lastName:
+        type: string
+      login:
+        type: string
+      mobilePhone:
+        type: string
+      municipality:
+        type: string
+      municipalityCode:
+        type: string
+      needVatDetail:
+        type: string
+      otherFields:
+        type: object
+        additionalProperties:
+          type: string
+      parentId:
+        type: string
+      payFrom:
+        type: string
+      payTo:
+        type: string
+      payerBankAccNo:
+        type: string
+      payerBankAddress:
+        type: string
+      payerBankName:
+        type: string
+      payerCompanyAddress:
+        type: string
+      payerCompanyName:
+        type: string
+      payerTaxRegNo:
+        type: string
+      payerTelephone:
+        type: string
+      paymentTerm:
+        type: integer
+        format: int32
+      phone:
+        type: string
+      postalCode:
+        type: string
+      recordStatus:
+        type: integer
+        format: int32
+      salesRep:
+        type: string
+      serviceCutLimitAmount:
+        type: number
+        format: float
+      speInvDate:
+        type: string
+      state:
+        type: string
+      stateName:
+        type: string
+      stateTaxId:
+        type: string
+      street:
+        type: string
+      subsidiary:
+        type: string
+      taxNumber:
+        type: string
+      taxPayerType:
+        type: string
+      taxRate:
+        type: number
+        format: float
+      taxSituation:
+        type: string
+      unitNumber:
+        type: string
+      updateTime:
+        type: string
+        format: date-time
+      vatVoucherType:
+        type: string
+      whiteListReminder:
+        type: string
+      whitelistExpirationDate:
+        type: string
+        format: date-time
+    title: Customer
+  CustomerSyncDto:
+    type: object
+    properties:
+      accountBankDetails:
+        type: string
+      accountGivenName:
+        type: string
+      accountName:
+        type: string
+      address:
+        type: string
+      aiBank:
+        type: string
+      altEmail:
+        type: string
+      attention:
+        type: string
+      businessUnit:
+        type: string
+      city:
+        type: string
+      cityCode:
+        type: string
+      cityTaxId:
+        type: string
+      clientId:
+        type: string
+      companyName:
+        type: string
+      companyShortName:
+        type: string
+      countryRegion:
+        type: string
+      cscMails:
+        type: string
+      currency:
+        type: string
+      customerId:
+        type: string
+      dateOfInvoicing:
+        type: string
+      disTaxId:
+        type: string
+      district:
+        type: string
+      districtCode:
+        type: string
+      email:
+        type: string
+      externalCompanyId:
+        type: string
+      fax:
+        type: string
+      firstName:
+        type: string
+      gender:
+        type: string
+      giro:
+        type: string
+      houseNumber:
+        type: string
+      invCompanyName:
+        type: string
+      invoiceByLogin:
+        type: string
+      invoiceDate:
+        type: string
+      invoiceEmail:
+        type: string
+      isKeyAccount:
+        type: string
+      isServiceCut:
+        type: boolean
+      isWhiteListed:
+        type: boolean
+      jobTitle:
+        type: string
+      keyAccountSic:
+        type: string
+      lastName:
+        type: string
+      login:
+        type: string
+      mobilePhone:
+        type: string
+      municipality:
+        type: string
+      municipalityCode:
+        type: string
+      needVatDetail:
+        type: string
+      otherFields:
+        type: object
+        additionalProperties:
+          type: string
+      parentId:
+        type: string
+      payFrom:
+        type: string
+      payTo:
+        type: string
+      payerBankAccNo:
+        type: string
+      payerBankAddress:
+        type: string
+      payerBankName:
+        type: string
+      payerCompanyAddress:
+        type: string
+      payerCompanyName:
+        type: string
+      payerTaxRegNo:
+        type: string
+      payerTelephone:
+        type: string
+      paymentTerm:
+        type: integer
+        format: int32
+      phone:
+        type: string
+      postalCode:
+        type: string
+      salesRep:
+        type: string
+      serviceCutLimitAmount:
+        type: number
+        format: float
+      speInvDate:
+        type: string
+      stateCode:
+        type: string
+      stateName:
+        type: string
+      stateTaxId:
+        type: string
+      street:
+        type: string
+      subsidiary:
+        type: string
+      taxNumber:
+        type: string
+      taxPayerType:
+        type: string
+      taxRate:
+        type: number
+        format: float
+      taxSituation:
+        type: string
+      unitNumber:
+        type: string
+      vatVoucherType:
+        type: string
+      whiteListReminder:
+        type: string
+      whitelistExpirationDate:
+        type: string
+        format: date-time
+    title: CustomerSyncDto
+  Employee:
+    type: object
+    properties:
+      bankCity:
+        type: string
+      bankCountry:
+        type: string
+      bankName:
+        type: string
+      bankProvince:
+        type: string
+      beneficiary:
+        type: string
+      birthday:
+        type: string
+        format: date
+      chineseBankName:
+        type: string
+      chineseName:
+        type: string
+      companyCode:
+        type: string
+      country:
+        type: string
+      currency:
+        type: string
+      department:
+        type: string
+      email:
+        type: string
+      employeeId:
+        type: string
+      employeeNumber:
+        type: string
+      etlId:
+        type: string
+      firstName:
+        type: string
+      hireDate:
+        type: string
+        format: date
+      homeAddress:
+        type: string
+      housingFundNumber:
+        type: string
+      hukou:
+        type: string
+      iban:
+        type: string
+      idCardNumber:
+        type: string
+      inspectorOffice:
+        type: string
+      isSalesRep:
+        type: string
+      jobDescription:
+        type: string
+      jobTitle:
+        type: string
+      lastName:
+        type: string
+      marketingCM:
+        type: string
+      mobilePhone:
+        type: string
+      mrms:
+        type: string
+      officePhone:
+        type: string
+      passportNumber:
+        type: string
+      payExp:
+        type: string
+      payInHkd:
+        type: string
+      paywithSalary:
+        type: string
+      phone:
+        type: string
+      postalAddress:
+        type: string
+      probation:
+        type: string
+      recordStatus:
+        type: integer
+        format: int32
+      resellerCM:
+        type: string
+      socialSecurityNumber:
+        type: string
+      staffAfterProbationDate:
+        type: string
+        format: date
+      staffCity:
+        type: string
+      status:
+        type: string
+      supervisor:
+        type: string
+      swift:
+        type: string
+      terminationDate:
+        type: string
+        format: date
+      type:
+        type: string
+      updateTime:
+        type: string
+        format: date-time
+      zip:
+        type: string
+    title: Employee
+  EmployeeExternalMapping:
+    type: object
+    properties:
+      createTime:
+        type: string
+        format: date-time
+      externalId:
+        type: string
+      externalSystem:
+        type: string
+        enum:
+          - SAP
+          - NetSuite
+      id:
+        type: string
+      qimaEmployeeId:
+        type: string
+      remark:
+        type: string
+    title: EmployeeExternalMapping
+  Invoice:
+    type: object
+    properties:
+      billingCompanyName:
+        type: string
+      cnList:
+        type: string
+      createTime:
+        type: string
+        format: date-time
+      dnList:
+        type: string
+      emailSentDate:
+        type: string
+        format: date-time
+      errorDetails:
+        type: string
+      id:
+        type: string
+      invDate:
+        type: string
+        format: date-time
+      invNm:
+        type: string
+      invoiceCompany:
+        type: string
+      invoiceEmails:
+        type: string
+      invoiceLogin:
+        type: string
+      invoiceURL:
+        type: string
+      isEmailSent:
+        type: string
+      orderList:
+        type: string
+      payLogin:
+        type: string
+      status:
+        type: integer
+        format: int32
+      subLogin:
+        type: string
+      updateTime:
+        type: string
+        format: date-time
+    title: Invoice
+  InvoiceValidator:
+    type: object
+    properties:
+      invoices:
+        type: array
+        items:
+          $ref: '#/definitions/NetSuiteInvoiceDTO'
+    title: InvoiceValidator
+  LTInvoice:
+    type: object
+    properties:
+      billToId:
+        type: string
+      category:
+        type: string
+      createTime:
+        type: string
+        format: date-time
+      currency:
+        type: string
+      description:
+        type: string
+      grpInvoiceNo:
+        type: string
+      id:
+        type: string
+      invoiceNo:
+        type: string
+      isCredited:
+        type: string
+      isGroupInvoice:
+        type: string
+      labOrderNo:
+        type: string
+      officeName:
+        type: string
+      reportNo:
+        type: string
+      sampleCharge:
+        type: number
+        format: double
+      status:
+        type: integer
+        format: int32
+      subsidiary:
+        type: string
+      turnoverAmount:
+        type: number
+        format: double
+      turnoverCalcDate:
+        type: string
+        format: date-time
+      updateTime:
+        type: string
+        format: date-time
+      vat:
+        type: number
+        format: double
+      vatAmount:
+        type: number
+        format: double
+    title: LTInvoice
+  LTInvoiceViewDTO:
+    type: object
+    properties:
+      amountPaid:
+        type: number
+        format: double
+      amountRemaining:
+        type: number
+        format: double
+      billToId:
+        type: string
+      category:
+        type: string
+      companyId:
+        type: string
+      currency:
+        type: string
+      description:
+        type: string
+      grpInvoiceNo:
+        type: string
+      id:
+        type: string
+      invoiceNo:
+        type: string
+      invoiceStatus:
+        type: string
+      isCredited:
+        type: string
+      isGroupInvoice:
+        type: string
+      isPaid:
+        type: string
+      issueDate:
+        type: string
+        format: date-time
+      labOrderNo:
+        type: string
+      officeId:
+        type: string
+      officeName:
+        type: string
+      orderDescription:
+        type: string
+      orderId:
+        type: string
+      reportNo:
+        type: string
+      sampleCharge:
+        type: number
+        format: double
+      totalAmount:
+        type: number
+        format: double
+      turnoverAmount:
+        type: number
+        format: double
+      turnoverCalcDate:
+        type: string
+        format: date-time
+      vat:
+        type: number
+        format: double
+      vatAmount:
+        type: number
+        format: double
+    title: LTInvoiceViewDTO
+  LTOnlinePayment:
+    type: object
+    properties:
+      createTime:
+        type: string
+        format: date-time
+      customerId:
+        type: string
+      invoices:
+        type: array
+        items:
+          $ref: '#/definitions/LTOnlinePaymentInvoice'
+      originalCurrency:
+        type: string
+      paymentDate:
+        type: string
+        format: date-time
+      paymentId:
+        type: string
+      source:
+        type: string
+      status:
+        type: integer
+        format: int32
+      subsidiary:
+        type: string
+      totalTransactionAmount:
+        type: number
+        format: double
+      transactionType:
+        type: string
+      updateTime:
+        type: string
+        format: date-time
+    title: LTOnlinePayment
+  LTOnlinePaymentInvoice:
+    type: object
+    properties:
+      amountPaid:
+        type: number
+        format: double
+      amountRemaining:
+        type: number
+        format: double
+      companyId:
+        type: string
+      createTime:
+        type: string
+        format: date-time
+      currency:
+        type: string
+      id:
+        type: string
+      invoiceId:
+        type: string
+      invoiceNo:
+        type: string
+      invoiceStatus:
+        type: string
+      isPaid:
+        type: string
+      issueDate:
+        type: string
+        format: date-time
+      labOrderNo:
+        type: string
+      officeId:
+        type: string
+      officeName:
+        type: string
+      orderDescription:
+        type: string
+      orderId:
+        type: string
+      paymentId:
+        type: string
+      reportNo:
+        type: string
+      status:
+        type: integer
+        format: int32
+      totalAmount:
+        type: number
+        format: double
+      updateTime:
+        type: string
+        format: date-time
+    title: LTOnlinePaymentInvoice
+  'Map«string,string»':
+    type: object
+    title: 'Map«string,string»'
+    additionalProperties:
+      type: string
+  NetSuiteInvoiceDTO:
+    type: object
+    properties:
+      cnList:
+        type: string
+      dnList:
+        type: string
+      emailSentDate:
+        type: string
+        format: date-time
+      invDate:
+        type: string
+        format: date-time
+      invNm:
+        type: string
+      invoiceEmails:
+        type: string
+      invoiceURL:
+        type: string
+      isEmailSent:
+        type: string
+      orderList:
+        type: string
+      payLogin:
+        type: string
+      subLogin:
+        type: string
+    title: NetSuiteInvoiceDTO
+  NsSyncStatus:
+    type: object
+    properties:
+      createDate:
+        type: string
+        format: date-time
+      errorCode:
+        type: string
+      errorDetails:
+        type: string
+      etlId:
+        type: string
+      id:
+        type: string
+      nsInternalId:
+        type: integer
+        format: int64
+      result:
+        type: string
+      type:
+        type: string
+    title: NsSyncStatus
+  OfflinePayment:
+    type: object
+    properties:
+      UNID:
+        type: string
+      createTime:
+        type: string
+        format: date-time
+      currency:
+        type: string
+      discount:
+        type: number
+        format: double
+      errorDetail:
+        type: string
+      exactPt:
+        type: number
+        format: double
+      id:
+        type: string
+      orderNo:
+        type: string
+      orderPaid:
+        type: string
+      originalAmount:
+        type: number
+        format: double
+      outStd:
+        type: number
+        format: double
+      paidDate:
+        type: string
+        format: date-time
+      status:
+        type: integer
+        format: int32
+      totalPt:
+        type: number
+        format: double
+      transactionDate:
+        type: string
+        format: date-time
+      type:
+        type: string
+      unappliedreason:
+        type: string
+      updateTime:
+        type: string
+        format: date-time
+    title: OfflinePayment
+  OnlinePayment:
+    type: object
+    properties:
+      bankACInternalId:
+        type: string
+      createTime:
+        type: string
+        format: date-time
+      currency:
+        type: string
+      customerId:
+        type: string
+      id:
+        type: string
+      orderAmountMapping:
+        type: string
+      originalCurrency:
+        type: string
+      originalTotalAmount:
+        type: number
+        format: double
+      paymentDate:
+        type: string
+        format: date
+      paymentGateway:
+        type: string
+      status:
+        type: integer
+        format: int32
+      totalAmount:
+        type: number
+        format: double
+      transactionNumber:
+        type: string
+      updateTime:
+        type: string
+        format: date-time
+    title: OnlinePayment
+  OnlinePaymentDTO:
+    type: object
+    properties:
+      applyToInvoices:
+        type: array
+        items:
+          $ref: '#/definitions/OrderDTO'
+      bankACInternalId:
+        type: string
+      currency:
+        type: string
+      customerId:
+        type: string
+      documentNum:
+        type: string
+      originalCurrency:
+        type: string
+      originalTotalAmount:
+        type: number
+        format: double
+      paymentDate:
+        type: string
+        format: date-time
+      paymentId:
+        type: string
+      source:
+        type: string
+      subsidiary:
+        type: string
+      totalAmount:
+        type: number
+        format: double
+    title: OnlinePaymentDTO
+  Order:
+    type: object
+    properties:
+      actualInspDate:
+        type: string
+        format: date
+      bookingDate:
+        type: string
+        format: date
+      certificationBookingType:
+        type: string
+      certificationCharge:
+        type: number
+      certificationClientBrand:
+        type: string
+      certificationInvoiceNo:
+        type: string
+      certificationOrderNo:
+        type: string
+      certificationType:
+        type: string
+      chargeItems:
+        type: string
+      clientPo:
+        type: string
+      clientRefNumber:
+        type: string
+      clientType:
+        type: string
+      convertedTotalAmount:
+        type: number
+      createTime:
+        type: string
+        format: date-time
+      currency:
+        type: string
+      customerId:
+        type: string
+      exchangeRate:
+        type: number
+      expectedInspDate:
+        type: string
+        format: date
+      expectedShipDate:
+        type: string
+        format: date
+      expressBookingFee:
+        type: number
+      extraReportCharge:
+        type: number
+      factoryName:
+        type: string
+      id:
+        type: string
+      inspectionCharge:
+        type: number
+      invoicePeriod:
+        type: string
+      isReinspection:
+        type: string
+      manDay:
+        type: number
+        format: double
+      manDayRate:
+        type: number
+      numberOfExtraReport:
+        type: integer
+        format: int32
+      numberOfProduct:
+        type: integer
+        format: int32
+      offlineCharge:
+        type: number
+      oneSep:
+        type: string
+      optionalFieldsCharge:
+        type: number
+      orderNumber:
+        type: string
+      orderPlacer:
+        type: string
+      orderStatus:
+        type: integer
+        format: int32
+      otherCharge:
+        type: number
+      otherChargeDescription:
+        type: string
+      overtimeCharge:
+        type: number
+        format: double
+      overtimeHours:
+        type: number
+        format: double
+      overtimeInspectionRate:
+        type: integer
+        format: int32
+      payLogin:
+        type: string
+      paymentTerm:
+        type: integer
+        format: int32
+      perRptCharge:
+        type: number
+      products:
+        type: array
+        items:
+          $ref: '#/definitions/Product'
+      proformaInvoiceNumber:
+        type: string
+      reportDate:
+        type: string
+        format: date
+      sampleCharge:
+        type: number
+      sampleNumber:
+        type: integer
+        format: int32
+      sampleRate:
+        type: number
+      serviceType:
+        type: integer
+        format: int32
+      sic:
+        type: string
+      status:
+        type: integer
+        format: int32
+      subLogin:
+        type: string
+      subServiceType:
+        type: integer
+        format: int32
+      subsidiary:
+        type: integer
+        format: int32
+      supplierCountry:
+        type: string
+      supplierName:
+        type: string
+      taxAmount:
+        type: number
+      taxRate:
+        type: number
+      totalCharge:
+        type: number
+      updateTime:
+        type: string
+        format: date-time
+    title: Order
+  OrderDTO:
+    type: object
+    properties:
+      bankCharge:
+        type: number
+        format: double
+      orderNum:
+        type: string
+      payAmount:
+        type: number
+        format: double
+    title: OrderDTO
+  OrderMarkUnpaidVo:
+    type: object
+    properties:
+      orderId:
+        type: string
+      orderNo:
+        type: string
+      unpaidReason:
+        type: string
+    title: OrderMarkUnpaidVo
+  OrderSyncDto:
+    type: object
+    properties:
+      actualInspDate:
+        type: string
+        format: date-time
+      bookingDate:
+        type: string
+        format: date-time
+      certificationBookingType:
+        type: string
+      certificationCharge:
+        type: number
+      certificationChargeItem:
+        type: array
+        items:
+          $ref: '#/definitions/ChargeItemDto'
+      certificationClientBrand:
+        type: string
+      certificationInvoiceNo:
+        type: string
+      certificationOrderNo:
+        type: string
+      certificationType:
+        type: string
+      clientPo:
+        type: string
+      companyId:
+        type: string
+      convertedTotalAmount:
+        type: number
+      currency:
+        type: string
+      exactCharge:
+        type: number
+      exchangeRate:
+        type: number
+      expectedInspDate:
+        type: string
+        format: date-time
+      expectedShipDate:
+        type: string
+        format: date-time
+      expressBookingFee:
+        type: number
+      factoryName:
+        type: string
+      invoicePeriod:
+        type: string
+      isReinspection:
+        type: string
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/ProductSyncDto'
+      login:
+        type: string
+      manDay:
+        type: number
+        format: double
+      manDayRate:
+        type: number
+      offlineCharge:
+        type: number
+      oneSep:
+        type: string
+      onlinePayDsp:
+        type: string
+      optionalFieldsCharge:
+        type: number
+      orderId:
+        type: string
+      orderNumber:
+        type: string
+      orderStatus:
+        type: integer
+        format: int32
+      otherCharge:
+        type: number
+      otherChargeDescription:
+        type: string
+      overtimeCharge:
+        type: number
+        format: double
+      overtimeHours:
+        type: number
+        format: double
+      overtimeInspectionRate:
+        type: integer
+        format: int32
+      payLogin:
+        type: string
+      paymentTerm:
+        type: integer
+        format: int32
+      perRptCharge:
+        type: number
+      productTotal:
+        type: integer
+        format: int32
+      proformaInvoiceNumber:
+        type: string
+      refNumber:
+        type: string
+      referenceNumber:
+        type: string
+      reportDate:
+        type: string
+        format: date-time
+      reportsCharge:
+        type: number
+      reportsNumber:
+        type: integer
+        format: int32
+      salesRep:
+        type: string
+      sampleCharge:
+        type: number
+      sampleNumber:
+        type: integer
+        format: int32
+      sampleRate:
+        type: number
+      serviceType:
+        type: integer
+        format: int32
+      subLogin:
+        type: string
+      subServiceType:
+        type: integer
+        format: int32
+      subsidiary:
+        type: integer
+        format: int32
+      supplierCountry:
+        type: string
+      supplierName:
+        type: string
+      taxAmount:
+        type: number
+      taxRate:
+        type: number
+      totalAmount:
+        type: number
+    title: OrderSyncDto
+  OrderUpdateSyncDto:
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/ProductUpdateSyncDto'
+      offlineCharge:
+        type: number
+      orderId:
+        type: string
+      orderNumber:
+        type: string
+      taxAmount:
+        type: number
+      taxRate:
+        type: number
+      totalAmount:
+        type: number
+    title: OrderUpdateSyncDto
+  OrderVo:
+    type: object
+    properties:
+      actualInspDate:
+        type: string
+        format: date
+      bookingDate:
+        type: string
+        format: date
+      certificationCharge:
+        type: number
+      certificationClientBrand:
+        type: string
+      certificationInvoiceNo:
+        type: string
+      certificationOrderNo:
+        type: string
+      certificationType:
+        type: string
+      chargeItems:
+        type: array
+        items:
+          $ref: '#/definitions/ChargeItemDto'
+      clientRefNumber:
+        type: string
+      clientType:
+        type: string
+      convertedTotalAmount:
+        type: number
+      createTime:
+        type: string
+        format: date-time
+      currency:
+        type: string
+      customerId:
+        type: string
+      exchangeRate:
+        type: number
+      expectedInspDate:
+        type: string
+        format: date
+      expectedShipDate:
+        type: string
+        format: date
+      expressBookingFee:
+        type: number
+      extraReportCharge:
+        type: number
+      factoryName:
+        type: string
+      id:
+        type: string
+      inspectionCharge:
+        type: number
+      interfaceLog:
+        $ref: '#/definitions/NsSyncStatus'
+      invoicePeriod:
+        type: string
+      isReinspection:
+        type: string
+      manDay:
+        type: number
+        format: double
+      manDayRate:
+        type: number
+      numberOfExtraReport:
+        type: integer
+        format: int32
+      numberOfProduct:
+        type: integer
+        format: int32
+      offlineCharge:
+        type: number
+      oneSep:
+        type: string
+      optionalFieldsCharge:
+        type: number
+      orderNumber:
+        type: string
+      orderPlacer:
+        type: string
+      orderStatus:
+        type: integer
+        format: int32
+      otherCharge:
+        type: number
+      otherChargeDescription:
+        type: string
+      overtimeCharge:
+        type: number
+        format: double
+      overtimeHours:
+        type: number
+        format: double
+      overtimeInspectionRate:
+        type: integer
+        format: int32
+      payLogin:
+        type: string
+      paymentTerm:
+        type: integer
+        format: int32
+      perRptCharge:
+        type: number
+      products:
+        type: array
+        items:
+          $ref: '#/definitions/ProductVo'
+      proformaInvoiceNumber:
+        type: string
+      reportDate:
+        type: string
+        format: date
+      sampleCharge:
+        type: number
+      sampleNumber:
+        type: integer
+        format: int32
+      sampleRate:
+        type: number
+      serviceType:
+        type: integer
+        format: int32
+      sic:
+        type: string
+      status:
+        type: integer
+        format: int32
+      subLogin:
+        type: string
+      subServiceType:
+        type: integer
+        format: int32
+      subsidiary:
+        type: integer
+        format: int32
+      supplierCountry:
+        type: string
+      supplierName:
+        type: string
+      taxAmount:
+        type: number
+      taxRate:
+        type: number
+      totalCharge:
+        type: number
+      updateTime:
+        type: string
+        format: date-time
+    title: OrderVo
+  PageDomain:
+    type: object
+    properties:
+      conditions:
+        type: object
+        additionalProperties:
+          type: string
+      isAsc:
+        type: string
+      orderBy:
+        type: string
+      orderByColumn:
+        type: string
+      pageNum:
+        type: integer
+        format: int32
+      pageSize:
+        type: integer
+        format: int32
+    title: PageDomain
+  PageModel«AdvancePaymentVo»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      rows:
+        type: array
+        items:
+          $ref: '#/definitions/AdvancePaymentVo'
+      total:
+        type: integer
+        format: int64
+    title: PageModel«AdvancePaymentVo»
+  PageModel«CreditDebitNoteVO»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      rows:
+        type: array
+        items:
+          $ref: '#/definitions/CreditDebitNoteVO'
+      total:
+        type: integer
+        format: int64
+    title: PageModel«CreditDebitNoteVO»
+  'PageModel«Map«string,string»»':
+    type: object
+    properties:
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/Map«string,string»'
+      page:
+        type: integer
+        format: int32
+      totalPages:
+        type: integer
+        format: int32
+      totalRrecords:
+        type: integer
+        format: int32
+    title: 'PageModel«Map«string,string»»'
+  PaymentSyncDTO:
+    type: object
+    properties:
+      currency:
+        type: string
+      customerId:
+        type: string
+      invoices:
+        type: array
+        items:
+          $ref: '#/definitions/LTInvoiceViewDTO'
+      paymentDate:
+        type: string
+        format: date-time
+      paymentId:
+        type: string
+      source:
+        type: string
+      subsidiary:
+        type: string
+      totalTransactionAmount:
+        type: number
+        format: double
+      transactionType:
+        type: string
+    title: PaymentSyncDTO
+  PaymentsBean:
+    type: object
+    properties:
+      payments:
+        type: array
+        items:
+          $ref: '#/definitions/OfflinePayment'
+    title: PaymentsBean
+  PeoProdContainerData:
+    type: object
+    properties:
+      containerId:
+        type: string
+      itemCount:
+        type: integer
+        format: int32
+      shipmentModality:
+        type: string
+    title: PeoProdContainerData
+  Product:
+    type: object
+    properties:
+      containerData:
+        type: string
+      createTime:
+        type: string
+        format: date-time
+      description:
+        type: string
+      id:
+        type: string
+      overallResult:
+        type: string
+      poNumber:
+        type: string
+      prodName:
+        type: string
+      prodQuantity:
+        type: integer
+        format: int64
+      prodReference:
+        type: string
+      reportNumber:
+        type: integer
+        format: int32
+      reportResult:
+        type: string
+      reportStatus:
+        type: integer
+        format: int32
+      status:
+        type: integer
+        format: int32
+      updateTime:
+        type: string
+        format: date-time
+    title: Product
+  ProductSyncDto:
+    type: object
+    properties:
+      containerData:
+        type: array
+        items:
+          $ref: '#/definitions/PeoProdContainerData'
+      currentStatus:
+        type: integer
+        format: int32
+      description:
+        type: string
+      etlId:
+        type: string
+      orderId:
+        type: string
+      orderNumber:
+        type: string
+      orderQuantity:
+        type: integer
+        format: int64
+      overallResult:
+        type: string
+      poNumber:
+        type: string
+      prodQuantity:
+        type: integer
+        format: int64
+      productName:
+        type: string
+      quantity:
+        type: integer
+        format: int64
+      referenceNumber:
+        type: string
+      reportNumber:
+        type: integer
+        format: int32
+      reportResult:
+        type: string
+    title: ProductSyncDto
+  ProductUpdateSyncDto:
+    type: object
+    properties:
+      etlId:
+        type: string
+      orderId:
+        type: string
+      reportResult:
+        type: string
+    title: ProductUpdateSyncDto
+  ProductVo:
+    type: object
+    properties:
+      containerData:
+        type: array
+        items:
+          $ref: '#/definitions/PeoProdContainerData'
+      description:
+        type: string
+      id:
+        type: string
+      overallResult:
+        type: string
+      poNumber:
+        type: string
+      prodName:
+        type: string
+      prodQuantity:
+        type: integer
+        format: int64
+      prodReference:
+        type: string
+      reportNumber:
+        type: integer
+        format: int32
+      reportResult:
+        type: string
+      reportStatus:
+        type: integer
+        format: int32
+    title: ProductVo
+  Result:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        type: object
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result
+  Result«BootstrapTableData»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        $ref: '#/definitions/BootstrapTableData'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«BootstrapTableData»
+  Result«CreditDebitNote»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        $ref: '#/definitions/CreditDebitNote'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«CreditDebitNote»
+  Result«CreditDebit»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        $ref: '#/definitions/CreditDebit'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«CreditDebit»
+  Result«Customer»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        $ref: '#/definitions/Customer'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«Customer»
+  Result«Employee»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        $ref: '#/definitions/Employee'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«Employee»
+  Result«Invoice»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        $ref: '#/definitions/Invoice'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«Invoice»
+  Result«LTInvoice»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        $ref: '#/definitions/LTInvoice'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«LTInvoice»
+  Result«LTOnlinePayment»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        $ref: '#/definitions/LTOnlinePayment'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«LTOnlinePayment»
+  Result«List«CreditDebitNote»»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/CreditDebitNote'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«List«CreditDebitNote»»
+  Result«List«CreditDebit»»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/CreditDebit'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«List«CreditDebit»»
+  Result«List«Customer»»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/Customer'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«List«Customer»»
+  Result«List«Employee»»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/Employee'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«List«Employee»»
+  Result«List«Invoice»»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/Invoice'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«List«Invoice»»
+  Result«List«LTInvoice»»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/LTInvoice'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«List«LTInvoice»»
+  Result«List«LTOnlinePayment»»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/LTOnlinePayment'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«List«LTOnlinePayment»»
+  Result«List«NsSyncStatus»»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/NsSyncStatus'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«List«NsSyncStatus»»
+  Result«List«OfflinePayment»»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/OfflinePayment'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«List«OfflinePayment»»
+  Result«List«OnlinePayment»»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/OnlinePayment'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«List«OnlinePayment»»
+  Result«List«Order»»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/Order'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«List«Order»»
+  Result«List«SapEmployeeJob»»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/SapEmployeeJob'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«List«SapEmployeeJob»»
+  Result«List«ServiceCutRestoreHistory»»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceCutRestoreHistory'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«List«ServiceCutRestoreHistory»»
+  Result«List«ServiceCutRestore»»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceCutRestore'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«List«ServiceCutRestore»»
+  Result«NsSyncStatus»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        $ref: '#/definitions/NsSyncStatus'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«NsSyncStatus»
+  Result«OfflinePayment»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        $ref: '#/definitions/OfflinePayment'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«OfflinePayment»
+  Result«OnlinePayment»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        $ref: '#/definitions/OnlinePayment'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«OnlinePayment»
+  Result«OrderVo»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        $ref: '#/definitions/OrderVo'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«OrderVo»
+  Result«Order»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        $ref: '#/definitions/Order'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«Order»
+  Result«SapEmployeeJob»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        $ref: '#/definitions/SapEmployeeJob'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«SapEmployeeJob»
+  Result«ServiceCutRestore»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        $ref: '#/definitions/ServiceCutRestore'
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«ServiceCutRestore»
+  Result«boolean»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        type: boolean
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«boolean»
+  Result«int»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        type: integer
+        format: int32
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«int»
+  Result«object»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        type: object
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«object»
+  Result«string»:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      data:
+        type: string
+      message:
+        type: string
+      success:
+        type: boolean
+    title: Result«string»
+  SapEmployeeAddress:
+    type: object
+    properties:
+      address:
+        type: string
+      addressType:
+        type: string
+      cityId:
+        type: string
+      country:
+        type: string
+      districtId:
+        type: string
+      id:
+        type: string
+      lastModified:
+        type: string
+        format: date-time
+      provinceId:
+        type: string
+      qspSyncTime:
+        type: string
+        format: date-time
+      userId:
+        type: string
+    title: SapEmployeeAddress
+  SapEmployeeBioInfo:
+    type: object
+    properties:
+      birthName:
+        type: string
+      countryOfBirth:
+        type: string
+      dateOfBirth:
+        type: string
+        format: date
+      id:
+        type: string
+      lastModified:
+        type: string
+        format: date
+      placeOfBirth:
+        type: string
+      qspSyncTime:
+        type: string
+        format: date-time
+      regionOfBirth:
+        type: string
+      userId:
+        type: string
+    title: SapEmployeeBioInfo
+  SapEmployeeJob:
+    type: object
+    properties:
+      actionArea:
+        type: string
+      addresses:
+        type: array
+        items:
+          $ref: '#/definitions/SapEmployeeAddress'
+      attachment:
+        type: string
+      birthlInfo:
+        $ref: '#/definitions/SapEmployeeBioInfo'
+      boFe:
+        type: string
+      businessUnit:
+        type: string
+      company:
+        type: string
+      companyCode:
+        type: string
+      companyEntryDate:
+        type: string
+        format: date
+      continent:
+        type: string
+      contractEndDate:
+        type: string
+      contractPeriodFrom:
+        type: string
+        format: date
+      contractType:
+        type: string
+      corporation:
+        type: string
+      country:
+        type: string
+      countryCostCentre:
+        type: string
+      countryOfResidence:
+        type: string
+      department:
+        type: string
+      deptEntryDate:
+        type: string
+        format: date
+      division:
+        type: string
+      empBusinessPhone:
+        type: string
+      empEmail:
+        type: string
+      empFirstName:
+        type: string
+      empLastName:
+        type: string
+      empPersonalEmail:
+        type: string
+      empPersonalPhone:
+        type: string
+      empUsername:
+        type: string
+      employeeClass:
+        type: string
+      employeeNo:
+        type: string
+      employeeNoticePeriod:
+        type: string
+      employeeStatus:
+        type: string
+      employmentType:
+        type: string
+      entryIntoGroup:
+        type: string
+      exitProcessCompletion:
+        type: string
+      expensePolicy:
+        type: string
+      expertise:
+        type: string
+      externalJobTitle:
+        type: string
+      externalMappings:
+        type: array
+        items:
+          $ref: '#/definitions/EmployeeExternalMapping'
+      functionalArea:
+        type: string
+      holidayCalendar:
+        type: string
+      id:
+        type: string
+      incentivePlan:
+        type: string
+      initialEntry:
+        type: string
+      insurancePaidBy:
+        type: string
+      isEligibleCar:
+        type: string
+      isFullTime:
+        type: string
+      jobCategory:
+        type: string
+      jobClassification:
+        type: string
+      jobEntryDate:
+        type: string
+        format: date
+      jobGrade:
+        type: string
+      jobRelations:
+        type: array
+        items:
+          $ref: '#/definitions/SapEmployeeJobRelation'
+      labourProtection:
+        type: string
+      lastModified:
+        type: string
+        format: date-time
+      lastModifiedBy:
+        type: string
+      leaveType:
+        type: string
+      loaReturnDate:
+        type: string
+        format: date
+      loaStartDate:
+        type: string
+        format: date
+      location:
+        type: string
+      locationEntryDate:
+        type: string
+        format: date
+      managerBusinessPhone:
+        type: string
+      managerEmail:
+        type: string
+      managerFirstName:
+        type: string
+      managerLastName:
+        type: string
+      managerPersonalEmail:
+        type: string
+      managerPersonalPhone:
+        type: string
+      managerUsername:
+        type: string
+      nationId:
+        $ref: '#/definitions/SapEmployeeNationId'
+      northSouthCn:
+        type: string
+      noticePeriodStartDate:
+        type: string
+        format: date
+      office:
+        type: string
+      payGrade:
+        type: string
+      payScaleArea:
+        type: string
+      payScaleGroup:
+        type: string
+      payScaleLevel:
+        type: string
+      payScaleType:
+        type: string
+      personalInfo:
+        $ref: '#/definitions/SapEmployeePersonalInfo'
+      posEntryDate:
+        type: string
+        format: date
+      position:
+        type: string
+      positionTitle:
+        type: string
+      probationEndDate:
+        type: string
+        format: date
+      probationStatus:
+        type: string
+      pslEntryDate:
+        type: string
+        format: date
+      ptCurrency:
+        type: string
+      ptDailyRate:
+        type: string
+      qspSyncTime:
+        type: string
+        format: date-time
+      recruitDate:
+        type: string
+        format: date
+      region:
+        type: string
+      showNoshow:
+        type: string
+      sicknessPayPeriod:
+        type: string
+      startDate:
+        type: string
+        format: date
+      stdWeeklyHours:
+        type: number
+        format: double
+      subDepartment:
+        type: string
+      terminationDate:
+        type: string
+      timeProfile:
+        type: string
+      timeRecordVariant:
+        type: string
+      waitForOnboard:
+        type: string
+      workDaysPerWeek:
+        type: number
+        format: double
+      workLocation:
+        type: string
+      workSchedule:
+        type: string
+    title: SapEmployeeJob
+  SapEmployeeJobRelation:
+    type: object
+    properties:
+      id:
+        type: string
+      lastModified:
+        type: string
+        format: date
+      managerFirstName:
+        type: string
+      managerLastName:
+        type: string
+      managerUserId:
+        type: string
+      qspSyncTime:
+        type: string
+        format: date-time
+      relationshipType:
+        type: string
+      userFirstName:
+        type: string
+      userId:
+        type: string
+      userLastName:
+        type: string
+    title: SapEmployeeJobRelation
+  SapEmployeeNationId:
+    type: object
+    properties:
+      attachment:
+        type: string
+      cardType:
+        type: string
+      country:
+        type: string
+      id:
+        type: string
+      isPrimary:
+        type: string
+      lastModified:
+        type: string
+        format: date
+      nationalId:
+        type: string
+      qspSyncTime:
+        type: string
+        format: date-time
+      tempidIsAvailable:
+        type: string
+      temporaryId:
+        type: string
+      userId:
+        type: string
+    title: SapEmployeeNationId
+  SapEmployeePersonalInfo:
+    type: object
+    properties:
+      attachment:
+        type: string
+      displayName:
+        type: string
+      endDate:
+        type: string
+        format: date
+      firstName:
+        type: string
+      formalName:
+        type: string
+      gender:
+        type: string
+      id:
+        type: string
+      lastModified:
+        type: string
+        format: date
+      lastName:
+        type: string
+      maritalStatus:
+        type: string
+      middleName:
+        type: string
+      nameFormatCode:
+        type: string
+      nationality:
+        type: string
+      preferredLanguage:
+        type: string
+      qspSyncTime:
+        type: string
+        format: date-time
+      salutation:
+        type: string
+      secondNationality:
+        type: string
+      startDate:
+        type: string
+        format: date
+      suffix:
+        type: string
+      userId:
+        type: string
+    title: SapEmployeePersonalInfo
+  ServiceCutDTO:
+    type: object
+    properties:
+      companies:
+        type: array
+        items:
+          $ref: '#/definitions/CompanyInfoDTO'
+      createBy:
+        type: string
+      createTime:
+        type: string
+        format: date-time
+      cutDate:
+        type: string
+        format: date-time
+    title: ServiceCutDTO
+  ServiceCutDTOForAPI:
+    type: object
+    properties:
+      currency:
+        type: string
+      firstInvoiceDate:
+        type: string
+        format: date-time
+      overdueAmount:
+        type: number
+        format: double
+      serviceCutDate:
+        type: string
+        format: date-time
+    title: ServiceCutDTOForAPI
+  ServiceCutRestore:
+    type: object
+    properties:
+      amount:
+        type: number
+        format: double
+      companyId:
+        type: string
+      createBy:
+        type: string
+      createTime:
+        type: string
+        format: date-time
+      currency:
+        type: string
+      cutDate:
+        type: string
+        format: date-time
+      firstInvoiceDate:
+        type: string
+        format: date-time
+      firstReminderDate:
+        type: string
+        format: date-time
+      id:
+        type: string
+      receiveTime:
+        type: string
+        format: date-time
+      restoreDate:
+        type: string
+        format: date-time
+      results:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceCutRestoreResults'
+      serviceStatus:
+        type: string
+    title: ServiceCutRestore
+  ServiceCutRestoreHistory:
+    type: object
+    properties:
+      actions:
+        type: string
+      when:
+        type: string
+        format: date-time
+      who:
+        type: string
+    title: ServiceCutRestoreHistory
+  ServiceCutRestoreResults:
+    type: object
+    properties:
+      errorDetails:
+        type: string
+      id:
+        type: string
+      performStatus:
+        type: integer
+        format: int32
+      serviceCutRestore:
+        $ref: '#/definitions/ServiceCutRestore'
+      serviceCutRestoreId:
+        type: string
+      targetService:
+        type: string
+      updateTime:
+        type: string
+        format: date-time
+    title: ServiceCutRestoreResults
+  ServiceRestoreDTO:
+    type: object
+    properties:
+      companies:
+        type: array
+        items:
+          $ref: '#/definitions/CompanyInfoDTO'
+      createBy:
+        type: string
+      createTime:
+        type: string
+        format: date-time
+      restoreDate:
+        type: string
+        format: date-time
+    title: ServiceRestoreDTO

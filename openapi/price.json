@@ -1,0 +1,1749 @@
+{
+	"openapi": "3.0.1",
+	"info": {
+		"title": "Price Service",
+		"description": "OpenAPI 3 for price service",
+		"version": "1.0.0-SNAPSHOT"
+	},
+	"servers": [
+		{
+			"url": "http://gwdev.qima.com/price-service",
+			"description": "Generated server url"
+		}
+	],
+	"tags": [
+		{
+			"name": "price config",
+			"description": "price config API"
+		},
+		{
+			"name": "price order",
+			"description": "Price order API"
+		},
+		{
+			"name": "price item",
+			"description": "The Price Item API"
+		},
+		{
+			"name": "geolocation",
+			"description": "The geolocation API"
+		},
+		{
+			"name": "version",
+			"description": "the version API"
+		}
+	],
+	"paths": {
+		"/v1.0/prices/orders/{orderId}": {
+			"get": {
+				"tags": [
+					"price order"
+				],
+				"description": "get order price API",
+				"operationId": "getOrderPrice",
+				"parameters": [
+					{
+						"name": "orderId",
+						"in": "path",
+						"description": "order id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResultVOOrderPriceVO"
+								}
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"price order"
+				],
+				"description": "re-calculate order price API",
+				"operationId": "recalculateOrderPrice",
+				"parameters": [
+					{
+						"name": "orderId",
+						"in": "path",
+						"description": "order id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/OrderPriceDTO"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResultVOOrderPriceVO"
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"price order"
+				],
+				"description": "calculate order price API",
+				"operationId": "calculateOrderPrice",
+				"parameters": [
+					{
+						"name": "orderId",
+						"in": "path",
+						"description": "order id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/OrderPriceDTO"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResultVOOrderPriceVO"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1.0/prices/items/{id}": {
+			"get": {
+				"tags": [
+					"price item"
+				],
+				"description": "get price item by id API",
+				"operationId": "get",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "price item id",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResultVOPriceItem"
+								}
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"price item"
+				],
+				"description": "update price item by id API",
+				"operationId": "update",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PriceItemDTO"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResultVOPriceItem"
+								}
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"price item"
+				],
+				"description": "delete price item by id API",
+				"operationId": "delete",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "price item id",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResultVOString"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1.0/prices/geolocations/{id}": {
+			"get": {
+				"tags": [
+					"geolocation"
+				],
+				"description": "get geolocation by id API",
+				"operationId": "get_1",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResultVOGeolocation"
+								}
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"geolocation"
+				],
+				"description": "update geolocation API",
+				"operationId": "update_1",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/GeolocationDTO"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResultVOGeolocation"
+								}
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"geolocation"
+				],
+				"description": "delete geolocation by id API",
+				"operationId": "delete_1",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int64"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResultVOString"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1.0/prices/orders": {
+			"post": {
+				"tags": [
+					"price order"
+				],
+				"description": "calculate draft order price API",
+				"operationId": "calculateDraftOrderPrice",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/OrderPriceDTO"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResultVOOrderPriceVO"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1.0/prices/items": {
+			"get": {
+				"tags": [
+					"price item"
+				],
+				"description": "get price item list by page API",
+				"operationId": "page",
+				"parameters": [
+					{
+						"name": "limit",
+						"in": "query",
+						"description": "page size",
+						"required": false,
+						"schema": {
+							"type": "integer",
+							"format": "int32",
+							"default": 10
+						}
+					},
+					{
+						"name": "page",
+						"in": "query",
+						"description": "current page",
+						"required": false,
+						"schema": {
+							"type": "integer",
+							"format": "int32",
+							"default": 0
+						}
+					},
+					{
+						"name": "itemName",
+						"in": "query",
+						"description": "item name",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "itemKey",
+						"in": "query",
+						"description": "item key",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "itemDescription",
+						"in": "query",
+						"description": "item description",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResultVOPagePriceItem"
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"price item"
+				],
+				"description": "save price item by id API",
+				"operationId": "save",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PriceItemDTO"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResultVOPriceItem"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1.0/prices/geolocations": {
+			"get": {
+				"tags": [
+					"geolocation"
+				],
+				"description": "get geolocation list by page API",
+				"operationId": "page_1",
+				"parameters": [
+					{
+						"name": "limit",
+						"in": "query",
+						"description": "page size",
+						"required": false,
+						"schema": {
+							"type": "integer",
+							"format": "int32",
+							"default": 10
+						}
+					},
+					{
+						"name": "page",
+						"in": "query",
+						"description": "current page",
+						"required": false,
+						"schema": {
+							"type": "integer",
+							"format": "int32",
+							"default": 0
+						}
+					},
+					{
+						"name": "locationName",
+						"in": "query",
+						"description": "location name",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "locationCode",
+						"in": "query",
+						"description": "location code",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "locationType",
+						"in": "query",
+						"description": "location type",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResultVOPageGeolocation"
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"geolocation"
+				],
+				"description": "save geolocation API",
+				"operationId": "save_1",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/GeolocationDTO"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResultVOGeolocation"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1.0/prices/configs/service-types/{serviceType}": {
+			"get": {
+				"tags": [
+					"price config"
+				],
+				"description": "find price configs by service type API",
+				"operationId": "findPriceConfigsByServiceType",
+				"parameters": [
+					{
+						"name": "serviceType",
+						"in": "path",
+						"description": "the order service type",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResultVOServiceTypePricePackageVO"
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"price config"
+				],
+				"description": "initialize price configs by service type API",
+				"operationId": "initializePriceConfigsByServiceType",
+				"parameters": [
+					{
+						"name": "serviceType",
+						"in": "path",
+						"description": "the order service type",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PricePackageDTO"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResultVOServiceTypePricePackageVO"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1.0/prices/configs/service-types/{serviceType}/release-new-version": {
+			"post": {
+				"tags": [
+					"price config"
+				],
+				"description": "release new version price configs by service type API",
+				"operationId": "releaseNewVersionPriceConfigsByServiceType",
+				"parameters": [
+					{
+						"name": "serviceType",
+						"in": "path",
+						"description": "the order service type",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PricePackageDTO"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResultVOServiceTypePricePackageVO"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1.0/prices/configs/clients/{clientId}/service-types/{serviceType}": {
+			"get": {
+				"tags": [
+					"price config"
+				],
+				"description": "find price configs by client id and service type API",
+				"operationId": "findPriceConfigsByClientId",
+				"parameters": [
+					{
+						"name": "clientId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "serviceType",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResultVOClientPricePackageVO"
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"price config"
+				],
+				"description": "initialize price configs by client id and service type API",
+				"operationId": "initializePriceConfigsByClientIdServiceType",
+				"parameters": [
+					{
+						"name": "clientId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "serviceType",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "username",
+						"in": "query",
+						"description": "The user name that triggers the action",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"example": "Chengfu Xie"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResultVOClientPricePackageVO"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1.0/prices/configs/clients/{clientId}/service-types/{serviceType}/release-new-version": {
+			"post": {
+				"tags": [
+					"price config"
+				],
+				"description": "increase client item price config API",
+				"operationId": "releaseNewVersionPriceConfigsByClientIdAndServiceType",
+				"parameters": [
+					{
+						"name": "serviceType",
+						"in": "path",
+						"description": "the order service type",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "clientId",
+						"in": "path",
+						"description": "the client id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/PricePackageDTO"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResultVOClientPricePackageVO"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1.0/prices/orders/{orderId}/unlock-price": {
+			"patch": {
+				"tags": [
+					"price order"
+				],
+				"description": "lock order price API",
+				"operationId": "unlockOrderPrice",
+				"parameters": [
+					{
+						"name": "orderId",
+						"in": "path",
+						"description": "order id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "username",
+						"in": "query",
+						"description": "the user name that triggers the action",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"example": "Chengfu Xie"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResultVOOrderPrice"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v1.0/prices/orders/{orderId}/lock-price": {
+			"patch": {
+				"tags": [
+					"price order"
+				],
+				"description": "lock order price API",
+				"operationId": "lockOrderPrice",
+				"parameters": [
+					{
+						"name": "orderId",
+						"in": "path",
+						"description": "order id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "username",
+						"in": "query",
+						"description": "the user name that triggers the action",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"example": "Chengfu Xie"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiResultVOOrderPrice"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/version": {
+			"get": {
+				"tags": [
+					"version"
+				],
+				"description": "get basic version info API",
+				"operationId": "version",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"type": "object",
+									"additionalProperties": {
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"OrderDTO": {
+				"type": "object",
+				"properties": {
+					"psiOrderDTO": {
+						"$ref": "#/components/schemas/PsiOrderDTO"
+					}
+				},
+				"description": "order data which impact price"
+			},
+			"OrderPriceDTO": {
+				"required": [
+					"clientId",
+					"serviceType",
+					"username"
+				],
+				"type": "object",
+				"properties": {
+					"serviceType": {
+						"type": "string",
+						"description": "order service type",
+						"example": "PSI"
+					},
+					"clientId": {
+						"type": "string",
+						"description": "order client id, "
+					},
+					"order": {
+						"$ref": "#/components/schemas/OrderDTO"
+					},
+					"username": {
+						"type": "string",
+						"description": "user name that triggers the action",
+						"example": "Chengfu Xie"
+					},
+					"localCurrencyCode": {
+						"type": "string",
+						"description": "client local currency code",
+						"example": "USD"
+					}
+				}
+			},
+			"PsiOrderDTO": {
+				"required": [
+					"manday"
+				],
+				"type": "object",
+				"properties": {
+					"manday": {
+						"maximum": 3650,
+						"minimum": 0,
+						"type": "number"
+					}
+				}
+			},
+			"ApiResultVOOrderPriceVO": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer",
+						"description": "response code",
+						"format": "int32",
+						"default": 200
+					},
+					"message": {
+						"title": "response message",
+						"type": "string",
+						"example": "request success"
+					},
+					"content": {
+						"$ref": "#/components/schemas/OrderPriceVO"
+					}
+				}
+			},
+			"OrderPriceItemVO": {
+				"type": "object",
+				"properties": {
+					"itemName": {
+						"type": "string"
+					},
+					"itemDescription": {
+						"type": "string"
+					},
+					"unitPrice": {
+						"type": "number"
+					},
+					"quantity": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"totalPrice": {
+						"type": "number"
+					},
+					"currencyCode": {
+						"type": "string"
+					}
+				}
+			},
+			"OrderPriceVO": {
+				"type": "object",
+				"properties": {
+					"orderId": {
+						"type": "string"
+					},
+					"serviceType": {
+						"type": "string"
+					},
+					"clientId": {
+						"type": "string"
+					},
+					"currencyCode": {
+						"type": "string"
+					},
+					"totalPrice": {
+						"type": "number"
+					},
+					"localCurrencyCode": {
+						"type": "string"
+					},
+					"localCurrencyTotalPrice": {
+						"type": "number"
+					},
+					"priceItems": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/OrderPriceItemVO"
+						}
+					}
+				},
+				"description": "response content"
+			},
+			"PriceItemDTO": {
+				"required": [
+					"itemKey",
+					"itemName",
+					"username"
+				],
+				"type": "object",
+				"properties": {
+					"itemName": {
+						"type": "string",
+						"description": "The price item name",
+						"example": "offline charge"
+					},
+					"itemDescription": {
+						"type": "string",
+						"description": "The price item description",
+						"example": "offline charge description"
+					},
+					"itemKey": {
+						"type": "string",
+						"description": "The price item key",
+						"example": "OFFLINE_CHARGE"
+					},
+					"username": {
+						"type": "string",
+						"description": "The user name that triggers the action",
+						"example": "Chengfu Xie"
+					}
+				}
+			},
+			"ApiResultVOPriceItem": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer",
+						"description": "response code",
+						"format": "int32",
+						"default": 200
+					},
+					"message": {
+						"title": "response message",
+						"type": "string",
+						"example": "request success"
+					},
+					"content": {
+						"$ref": "#/components/schemas/PriceItem"
+					}
+				}
+			},
+			"PriceItem": {
+				"type": "object",
+				"properties": {
+					"createBy": {
+						"type": "string"
+					},
+					"updateBy": {
+						"type": "string"
+					},
+					"createTime": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updateTime": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"id": {
+						"type": "integer",
+						"format": "int64"
+					},
+					"itemName": {
+						"type": "string"
+					},
+					"itemDescription": {
+						"type": "string"
+					},
+					"itemKey": {
+						"type": "string"
+					},
+					"active": {
+						"type": "boolean"
+					}
+				},
+				"description": "response content"
+			},
+			"GeolocationDTO": {
+				"required": [
+					"locationCode",
+					"locationName",
+					"locationType"
+				],
+				"type": "object",
+				"properties": {
+					"locationName": {
+						"type": "string",
+						"description": "Geolocation name"
+					},
+					"locationCode": {
+						"type": "string",
+						"description": "Geolocation ISO code, like country code, continent code"
+					},
+					"locationType": {
+						"type": "string",
+						"description": "Geolocation type, like district, city, county, province, state, country, continent"
+					},
+					"username": {
+						"type": "string",
+						"description": "The user name that triggers the action",
+						"example": "Chengfu Xie"
+					}
+				}
+			},
+			"ApiResultVOGeolocation": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer",
+						"description": "response code",
+						"format": "int32",
+						"default": 200
+					},
+					"message": {
+						"title": "response message",
+						"type": "string",
+						"example": "request success"
+					},
+					"content": {
+						"$ref": "#/components/schemas/Geolocation"
+					}
+				}
+			},
+			"Geolocation": {
+				"type": "object",
+				"properties": {
+					"createBy": {
+						"type": "string"
+					},
+					"updateBy": {
+						"type": "string"
+					},
+					"createTime": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updateTime": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"id": {
+						"type": "integer",
+						"format": "int64"
+					},
+					"locationName": {
+						"type": "string"
+					},
+					"locationCode": {
+						"type": "string"
+					},
+					"locationType": {
+						"type": "string"
+					},
+					"active": {
+						"type": "boolean"
+					}
+				},
+				"description": "response content"
+			},
+			"PriceConfigDTO": {
+				"required": [
+					"currencyCode",
+					"itemKey",
+					"itemName",
+					"price"
+				],
+				"type": "object",
+				"properties": {
+					"itemName": {
+						"type": "string",
+						"description": "price item name",
+						"example": "offline charge"
+					},
+					"itemDescription": {
+						"type": "string",
+						"description": "price item description",
+						"example": "offline charge description"
+					},
+					"itemKey": {
+						"type": "string",
+						"description": "price item key",
+						"example": "OFFLINE_CHARGE"
+					},
+					"price": {
+						"type": "number",
+						"description": "price item price",
+						"example": 1,
+						"default": 0
+					},
+					"currencyCode": {
+						"type": "string",
+						"description": "price item currency code",
+						"example": "USD",
+						"default": "USD"
+					},
+					"calculatePricePriority": {
+						"type": "integer",
+						"description": "the priority used to calculate price, like 1 -> 2 -> 3",
+						"format": "int32"
+					},
+					"locationName": {
+						"type": "string",
+						"description": "price item location name",
+						"example": "China"
+					},
+					"locationType": {
+						"type": "string",
+						"description": "price item location type, e.g, city, county, province, state, country, continent",
+						"example": "country"
+					}
+				},
+				"description": "package price configs"
+			},
+			"PricePackageDTO": {
+				"required": [
+					"packageName",
+					"priceConfigs",
+					"username"
+				],
+				"type": "object",
+				"properties": {
+					"packageName": {
+						"type": "string",
+						"description": "price package name",
+						"example": "PSI price package name"
+					},
+					"packageDescription": {
+						"type": "string",
+						"description": "price package description",
+						"example": "PSI price package description"
+					},
+					"priceConfigs": {
+						"type": "array",
+						"description": "package price configs",
+						"items": {
+							"$ref": "#/components/schemas/PriceConfigDTO"
+						}
+					},
+					"username": {
+						"type": "string",
+						"description": "user name that triggers the action",
+						"example": "Chengfu Xie"
+					}
+				}
+			},
+			"ApiResultVOServiceTypePricePackageVO": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer",
+						"description": "response code",
+						"format": "int32",
+						"default": 200
+					},
+					"message": {
+						"title": "response message",
+						"type": "string",
+						"example": "request success"
+					},
+					"content": {
+						"$ref": "#/components/schemas/ServiceTypePricePackageVO"
+					}
+				}
+			},
+			"PriceConfigVO": {
+				"type": "object",
+				"properties": {
+					"itemId": {
+						"type": "integer",
+						"format": "int64"
+					},
+					"itemName": {
+						"type": "string"
+					},
+					"itemDescription": {
+						"type": "string"
+					},
+					"itemKey": {
+						"type": "string"
+					},
+					"itemConfigId": {
+						"type": "integer",
+						"format": "int64"
+					},
+					"price": {
+						"type": "number"
+					},
+					"currencyCode": {
+						"type": "string"
+					},
+					"itemConfigVersion": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"calculatePricePriority": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"geolocationId": {
+						"type": "integer",
+						"format": "int64"
+					},
+					"locationName": {
+						"type": "string"
+					},
+					"locationCode": {
+						"type": "string"
+					},
+					"locationType": {
+						"type": "string"
+					}
+				}
+			},
+			"ServiceTypePricePackageVO": {
+				"type": "object",
+				"properties": {
+					"packageId": {
+						"type": "integer",
+						"format": "int64"
+					},
+					"packageName": {
+						"type": "string"
+					},
+					"packageDescription": {
+						"type": "string"
+					},
+					"packageVersion": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"serviceType": {
+						"type": "string"
+					},
+					"active": {
+						"type": "boolean"
+					},
+					"priceConfigs": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/PriceConfigVO"
+						}
+					}
+				},
+				"description": "response content"
+			},
+			"ApiResultVOClientPricePackageVO": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer",
+						"description": "response code",
+						"format": "int32",
+						"default": 200
+					},
+					"message": {
+						"title": "response message",
+						"type": "string",
+						"example": "request success"
+					},
+					"content": {
+						"$ref": "#/components/schemas/ClientPricePackageVO"
+					}
+				}
+			},
+			"ClientPricePackageVO": {
+				"type": "object",
+				"properties": {
+					"packageId": {
+						"type": "integer",
+						"format": "int64"
+					},
+					"packageName": {
+						"type": "string"
+					},
+					"packageDescription": {
+						"type": "string"
+					},
+					"packageVersion": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"clientId": {
+						"type": "string"
+					},
+					"serviceType": {
+						"type": "string"
+					},
+					"active": {
+						"type": "boolean"
+					},
+					"priceConfigs": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/PriceConfigVO"
+						}
+					}
+				},
+				"description": "response content"
+			},
+			"ApiResultVOOrderPrice": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer",
+						"description": "response code",
+						"format": "int32",
+						"default": 200
+					},
+					"message": {
+						"title": "response message",
+						"type": "string",
+						"example": "request success"
+					},
+					"content": {
+						"$ref": "#/components/schemas/OrderPrice"
+					}
+				}
+			},
+			"OrderPrice": {
+				"type": "object",
+				"properties": {
+					"createBy": {
+						"type": "string"
+					},
+					"updateBy": {
+						"type": "string"
+					},
+					"createTime": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updateTime": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"id": {
+						"type": "integer",
+						"format": "int64"
+					},
+					"orderId": {
+						"type": "string"
+					},
+					"clientPricePackageId": {
+						"type": "integer",
+						"format": "int64"
+					},
+					"currencyCode": {
+						"type": "string"
+					},
+					"totalPrice": {
+						"type": "number"
+					},
+					"localCurrencyCode": {
+						"type": "string"
+					},
+					"localCurrencyTotalPrice": {
+						"type": "number"
+					},
+					"locked": {
+						"type": "boolean"
+					}
+				},
+				"description": "response content"
+			},
+			"ApiResultVOPagePriceItem": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer",
+						"description": "response code",
+						"format": "int32",
+						"default": 200
+					},
+					"message": {
+						"title": "response message",
+						"type": "string",
+						"example": "request success"
+					},
+					"content": {
+						"$ref": "#/components/schemas/PagePriceItem"
+					}
+				}
+			},
+			"PagePriceItem": {
+				"type": "object",
+				"properties": {
+					"totalPages": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"totalElements": {
+						"type": "integer",
+						"format": "int64"
+					},
+					"sort": {
+						"$ref": "#/components/schemas/Sort"
+					},
+					"numberOfElements": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"first": {
+						"type": "boolean"
+					},
+					"pageable": {
+						"$ref": "#/components/schemas/PageableObject"
+					},
+					"last": {
+						"type": "boolean"
+					},
+					"size": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"content": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/PriceItem"
+						}
+					},
+					"number": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"empty": {
+						"type": "boolean"
+					}
+				},
+				"description": "response content"
+			},
+			"PageableObject": {
+				"type": "object",
+				"properties": {
+					"sort": {
+						"$ref": "#/components/schemas/Sort"
+					},
+					"unpaged": {
+						"type": "boolean"
+					},
+					"paged": {
+						"type": "boolean"
+					},
+					"pageNumber": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"pageSize": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"offset": {
+						"type": "integer",
+						"format": "int64"
+					}
+				}
+			},
+			"Sort": {
+				"type": "object",
+				"properties": {
+					"sorted": {
+						"type": "boolean"
+					},
+					"unsorted": {
+						"type": "boolean"
+					},
+					"empty": {
+						"type": "boolean"
+					}
+				}
+			},
+			"ApiResultVOPageGeolocation": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer",
+						"description": "response code",
+						"format": "int32",
+						"default": 200
+					},
+					"message": {
+						"title": "response message",
+						"type": "string",
+						"example": "request success"
+					},
+					"content": {
+						"$ref": "#/components/schemas/PageGeolocation"
+					}
+				}
+			},
+			"PageGeolocation": {
+				"type": "object",
+				"properties": {
+					"totalPages": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"totalElements": {
+						"type": "integer",
+						"format": "int64"
+					},
+					"sort": {
+						"$ref": "#/components/schemas/Sort"
+					},
+					"numberOfElements": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"first": {
+						"type": "boolean"
+					},
+					"pageable": {
+						"$ref": "#/components/schemas/PageableObject"
+					},
+					"last": {
+						"type": "boolean"
+					},
+					"size": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"content": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/Geolocation"
+						}
+					},
+					"number": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"empty": {
+						"type": "boolean"
+					}
+				},
+				"description": "response content"
+			},
+			"ApiResultVOString": {
+				"type": "object",
+				"properties": {
+					"code": {
+						"type": "integer",
+						"description": "response code",
+						"format": "int32",
+						"default": 200
+					},
+					"message": {
+						"title": "response message",
+						"type": "string",
+						"example": "request success"
+					},
+					"content": {
+						"type": "string",
+						"description": "response content"
+					}
+				}
+			}
+		}
+	}
+}
